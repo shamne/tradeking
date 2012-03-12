@@ -27,7 +27,8 @@ Gem::Specification.new do |s|
     "lib/tradeking.rb",
     "lib/tradeking/client.rb",
     "test/helper.rb",
-    "test/test_tradeking.rb"
+    "test/test_tradeking.rb",
+    "tradeking.gemspec"
   ]
   s.homepage = "http://github.com/shamne/tradeking"
   s.licenses = ["MIT"]
