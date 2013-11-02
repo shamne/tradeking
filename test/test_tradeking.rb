@@ -1,7 +1,8 @@
 require 'helper'
 
 class TestTradeking < Test::Unit::TestCase
-  should "probably rename this file and start testing for real" do
-    #flunk "hey buddy, you should probably rename this file and start testing for real"
+  def test_one
+    tradeking = Tradeking::Client.new()
+    assert_equal [], tradeking.accounts
   end
 end

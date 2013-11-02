@@ -11,35 +11,11 @@ rescue Bundler::BundlerError => e
 end
 require 'rake'
 
-require 'jeweler'
-Jeweler::Tasks.new do |gem|
-  # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "tradeking"
-  gem.homepage = "http://github.com/shamne/tradeking"
-  gem.license = "MIT"
-  gem.summary = "Tradeking oauth api library for ruby"
-  gem.description = "Tradeking oauth api library for ruby"
-  gem.email = "alexander.shamne@gmail.com"
-  gem.authors = ["Alexander Shamne"]
-  # dependencies defined in Gemfile
-end
-Jeweler::RubygemsDotOrgTasks.new
-
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
+  test.libs << 'test'
   test.pattern = 'test/**/test_*.rb'
   test.verbose = true
 end
 
 task :default => :test
-
-require 'rdoc/task'
-Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
-
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "tradeking #{version}"
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
-end
