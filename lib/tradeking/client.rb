@@ -1,6 +1,9 @@
 module Tradeking
   class Client
 
+    include Tradeking::Http::Request
+    include Tradeking::Http::Response
+
     API_URI = "https://api.tradeking.com"
 
     VALID_CALLS = [
@@ -50,8 +53,8 @@ module Tradeking
     # * +operation+ - Operation path without API version ("/v1/")
     # ==== Example
     # client.api(:get, "market/options/expirations.json")
-    def api type, operation
-      response = @oauth_access_token.send(type, "/v1/#{operation}", {'Accept' => 'application/json'})
+    def api type, operation, *args
+      response = send(type, operation, args)
       JSON.parse(response.body)["response"]
     end
 

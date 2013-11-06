@@ -12,10 +12,12 @@ class Test::Unit::TestCase
     access_token_secret: "abc"
   }
 
-  def stub_v1_api_call type, operation
-    stub_request(type, 'https://api.tradeking.com/v1/' << operation).to_return(
-      :body => File.read(File.join(File.dirname(__FILE__), 'support/responses/' << operation.gsub("/","_"))),
-      :status => 200
+  def stub_v1_api_call type, operation, attrs={}
+    stub_request(type, 'https://api.tradeking.com/v1/' << operation)
+      .with(:body => attrs.empty? ? {} : "[#{attrs}]")
+      .to_return(
+        :body => File.read(File.join(File.dirname(__FILE__), 'support/responses/' << "#{type}_" << operation.gsub("/","_"))),
+        :status => 200
     )
   end
 
