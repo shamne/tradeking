@@ -1,5 +1,0 @@
-= Tradeking API wrapper
-
-Ruby wrapper for a Tradeking API.
-Allows access to a Tradeking account's rest operations https://developers.tradeking.com/documentation/getting-started
-
