@@ -26,6 +26,7 @@ Then access API operations, you can find a full list of operations [here](https:
 
 You should be able to run the test suite:
 
+    bundle install
     rake
 
 You can also run just one test file:
