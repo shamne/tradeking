@@ -14,15 +14,12 @@ Instantiate a client with your tradeking credentials. You can get it [here](http
 
     client = Tradeking::Client.new(consumer_key: "YOUR_KEY", consumer_secret: "YOUR_SECRET", access_token: "TOKEN", access_token_secret: "TOKEN_SECRET")
 
-Then access API operations
+Then access API operations, you can find a full list of operations [here](https://developers.tradeking.com/documentation/request-structure)
 
-    client.accounts
-    client.accounts("123")
-    client.watchlists
-
-Or use generic way, you can find a full list of operations [here](https://developers.tradeking.com/documentation/request-structure)
-
-    client.api(:get, "market/options/expirations.json")
+    client.get("market/options/expirations")
+    client.get("market/news/search", {keywords: "ford"})
+    client.post("watchlists", {id: "MyNewWatchlist", symbols: "AAPL,MSFT"})
+    client.delete("watchlists/MyList")
 
 
 ## Testing
