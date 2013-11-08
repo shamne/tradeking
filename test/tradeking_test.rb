@@ -6,52 +6,42 @@ class TestTradeking < Test::Unit::TestCase
     @client = Tradeking::Client.new(ACCESS_CREDENTIALS)
   end
 
+  def test_client_instance_vars
+    assert_equal @client.instance_variable_get(:@oauth_consumer).class, OAuth::Consumer
+    assert_equal @client.instance_variable_get(:@oauth_access_token).class, OAuth::AccessToken
+  end
+
   def test_api_get
-    resource = "watchlists"
-    stub_request = stub_v1_api_call(:get, "#{resource}.json")
-    expected_body = File.read(File.join(File.dirname(__FILE__), 'support/responses/' << "get_#{resource}.json"))
-    assert_equal JSON.parse(expected_body)["response"], @client.api(:get, "#{resource}.json")
+    stub_request = stub_v1_api_call(:get, "watchlists.json")
+    assert_equal JSON.parse(expected_body("get_watchlists.json"))["response"], @client.get("watchlists")
+    assert_requested(stub_request)
+  end
+
+  def test_api_get_with_attributes
+    params = {keywords: "qqq"}
+    stub_request = stub_v1_api_call(:get, "market/news/search.json?keywords=qqq")
+    assert_equal JSON.parse(expected_body("get_market_news_search.json"))["response"], @client.get("market/news/search", params)
+    assert_requested(stub_request)
+  end
+
+  def test_api_get_wrongpath
+    stub_request = stub_v1_api_call(:get, "wrongpath.json")
+    exception = assert_raise(RuntimeError) {@client.get("wrongpath")}
+    assert_equal("Service Operation Identification Failure", exception.message)
     assert_requested(stub_request)
   end
 
   def test_api_post
-    resource = "watchlists"
     params = {id: "New watchlist", symbols: "AAPL,MSFT"}
-    stub_request = stub_v1_api_call(:post, "#{resource}.json", params)
-    expected_body = File.read(File.join(File.dirname(__FILE__), 'support/responses/' << "post_#{resource}.json"))
-    assert_equal JSON.parse(expected_body)["response"], @client.api(:post, "#{resource}.json", params)
+    stub_request = stub_v1_api_call(:post, "watchlists.json", params)
+    assert_equal JSON.parse(expected_body("post_watchlists.json"))["response"], @client.post("watchlists", params)
     assert_requested(stub_request)
   end
 
-  def test_accounts
-    resource = "accounts"
-    stub_request = stub_v1_api_call(:get, "#{resource}.json")
-    expected_body = File.read(File.join(File.dirname(__FILE__), 'support/responses/' << "get_#{resource}.json"))
-    assert_equal JSON.parse(expected_body)["response"][resource], @client.accounts
+  def test_api_delete
+    stub_request = stub_v1_api_call(:delete, "watchlists/One.json")
+    assert_equal JSON.parse(expected_body("delete_watchlists_One.json"))["response"], @client.delete("watchlists/One")
     assert_requested(stub_request)
   end
 
-  def test_account_show
-    resource = "accounts"
-    stub_request = stub_v1_api_call(:get, "#{resource}/12345.json")
-    expected_body = File.read(File.join(File.dirname(__FILE__), 'support/responses/' << "get_#{resource}_12345.json"))
-    assert_equal JSON.parse(expected_body)["response"][resource], @client.accounts("12345")
-    assert_requested(stub_request)
-  end
-
-  def test_watchlists
-    resource = "watchlists"
-    stub_request = stub_v1_api_call(:get, "#{resource}.json")
-    expected_body = File.read(File.join(File.dirname(__FILE__), 'support/responses/' << "get_#{resource}.json"))
-    assert_equal JSON.parse(expected_body)["response"][resource], @client.watchlists
-    assert_requested(stub_request)
-  end
-
-  def test_watchlist_show
-    resource = "watchlists"
-    stub_request = stub_v1_api_call(:get, "#{resource}/One.json")
-    expected_body = File.read(File.join(File.dirname(__FILE__), 'support/responses/' << "get_#{resource}_One.json"))
-    assert_equal JSON.parse(expected_body)["response"][resource], @client.watchlists("One")
-    assert_requested(stub_request)
-  end
 end

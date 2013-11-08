@@ -13,12 +13,18 @@ class Test::Unit::TestCase
   }
 
   def stub_v1_api_call type, operation, attrs={}
+    filename = "#{type}_"
+    filename << operation.split("?").first.gsub("/","_")
     stub_request(type, 'https://api.tradeking.com/v1/' << operation)
-      .with(:body => attrs.empty? ? {} : "[#{attrs}]")
+      .with(:body => attrs.empty? ? {} : attrs)
       .to_return(
-        :body => File.read(File.join(File.dirname(__FILE__), 'support/responses/' << "#{type}_" << operation.gsub("/","_"))),
+        :body => expected_body(filename),
         :status => 200
     )
+  end
+
+  def expected_body filename
+    File.read(File.join(File.dirname(__FILE__), 'support/responses/' << filename))
   end
 
 end

@@ -1,8 +1,11 @@
 require 'oauth'
 require 'json'
-require 'tradeking/http/request'
-require 'tradeking/http/response'
 require 'tradeking/client'
 
 module Tradeking
+
+  API_URI = "https://api.tradeking.com"
+  API_VERSION = "v1"
+  API_FORMAT = "json"
+
 end

@@ -1,0 +1,9 @@
+{
+	"response": {
+		"@id": "63980f49:14234eeadc3:2b2c",
+		"type": "Error",
+		"name": "ServiceOperationIdentificationFailure",
+		"description": "Service Operation Identification Failure",
+		"path" : "/v1/blah.json"
+	}
+}
