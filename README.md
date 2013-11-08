@@ -12,6 +12,7 @@ API wrapper can be used from the command line or as part of a Ruby web framework
 
 Instantiate a client with your tradeking credentials. You can get it [here](https://developers.tradeking.com/applications)
 
+    require 'tradeking'
     client = Tradeking::Client.new(consumer_key: "YOUR_KEY", consumer_secret: "YOUR_SECRET", access_token: "TOKEN", access_token_secret: "TOKEN_SECRET")
 
 Then access API operations, you can find a full list of operations [here](https://developers.tradeking.com/documentation/request-structure)
